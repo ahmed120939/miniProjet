@@ -8,7 +8,6 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
 
 @Getter
 @Setter
@@ -16,12 +15,15 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
+
+@Inheritance(strategy = InheritanceType. TABLE_PER_CLASS)
+@DiscriminatorColumn(name = "TYPE_PERSONNE")
 @Entity
 @Table(name = "utilisateurs")
 public class Utilisateur implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(unique = true, nullable = false)
@@ -51,12 +53,5 @@ public class Utilisateur implements Serializable {
     @NotBlank
     @Size(min = 6, max = 10)
     private String password;
-
-    @OneToMany(mappedBy = "utilisateur", cascade = CascadeType.ALL)
-    private List<Conge> conges ;
-
-
-
-
 
 }

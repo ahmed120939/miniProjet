@@ -7,7 +7,7 @@
     <script src="../js/bootstrap.bundle.min.js"></script>
     <script src="../js/jquery-3.6.1.min.js"></script>
     <script src="../js/sweetalert.min.js"></script>
-    <script src="../js/utilisateur.js"></script>
+    <script src="../js/conge.js"></script>
     <meta charset="utf-8">
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -48,78 +48,92 @@
 
 <body>
 
-<main>
-    <div class="container">
+<!-- ======= Header ======= -->
+<div th:insert="header :: header"></div>
 
-        <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+<!-- End Header -->
 
-                        <div class="d-flex justify-content-center py-4">
-                            <a href="index.html" class="logo d-flex align-items-center w-auto">
-                                <img src="assets/img/logo.png" alt="">
-                                <span class="d-none d-lg-block">
-                                    gestion Conge
-                                </span>
-                            </a>
-                        </div><!-- End Logo -->
+<!-- ======= Sidebar ======= -->
+<div th:insert="sidebar :: sidebar"></div>
 
-                        <div class="card mb-3">
+<main id="main" class="main">
 
-                            <div class="card-body">
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
 
-                                <div class="pt-4 pb-2">
-                                    <h5 class="card-title text-center pb-0 fs-4">Login</h5>
-                                    <p class="text-center small">Entrer login & mot de passe</p>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">List Conges</h5>
+
+                        <!-- Table with stripped rows -->
+                        <table class="table datatable">
+                            <div class="datatable-top">
+                                <div class="datatable-dropdown">
+                                    <label>
+                                        <select th:onchange="findAllCongeByYears(this.value)" class="datatable-selector" name="exercices">
+                                            <option th:each="exercice : ${exercices}"
+                                                    th:value="${exercice}"
+                                                    th:text="${exercice}"></option>
+                                        </select> <b>  Années</b>
+                                    </label>
                                 </div>
-
-                                <form th:action="@{/utilisateur/login}" method="POST" class="row g-3 needs-validation"
-                                      novalidate>
-
-                                    <div class="col-12">
-                                        <label for="login" class="form-label">login</label>
-                                        <div class="input-group has-validation">
-
-                                            <input type="text" name="login" class="form-control" id="login" required>
-                                            <div class="invalid-feedback">Please enter your username.</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12">
-                                        <label for="yourPassword" class="form-label">Password</label>
-                                        <input type="password" name="password" class="form-control" id="yourPassword"
-                                               required>
-                                        <div class="invalid-feedback">Please enter your password!</div>
-                                    </div>
-
-
-                                    <div th:if="${error}" class="col-12">
-                                        <script>
-                showErrorMessage('Invalid username or password');
-
-                                        </script>
-                                    </div>
-
-                                    <div class="col-12">
-                                        <button class="btn btn-primary w-100" type="submit">Login</button>
-                                    </div>
-
-                                </form>
-
-
+                                <div class="datatable-dropdown">
+                                    <label>
+                                        <select th:onchange="findAllCongeByEtat(this.value)" class="datatable-selector" name="etats">
+                                            <option th:each="etat : ${etats}"
+                                                    th:value="${etat}"
+                                                    th:text="${etat}"></option>
+                                        </select><b>  Etats</b>
+                                    </label>
+                                </div>
                             </div>
-                        </div>
+                            <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th data-type="date" data-format="YYYY/DD/MM">Date Debut</th>
+                                <th data-type="date" data-format="YYYY/DD/MM">Date Fin</th>
+                                <th data-type="date" data-format="YYYY/DD/MM">Date Rupture</th>
+                                <th>Etat</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:id="${conge.id}" th:each="conge: ${conges}">
 
+                                <td th:text="${conge.description}"/>
+                                <td th:text="${conge.dateDebut}"/>
+                                <td th:text="${conge.dateFin}"/>
+                                <td th:text="${conge.dateRupture}"/>
+                                <td>
+                                    <span th:if="${conge.etat.name() == 'SOLLICITE'}" class="badge bg-primary"
+                                          th:text="${conge.etat}"></span>
+                                    <span th:if="${conge.etat.name() == 'VALIDE'}" class="badge bg-success"
+                                          th:text="${conge.etat}"></span>
+                                    <span th:if="${conge.etat.name() == 'REFUSE'}" class="badge bg-danger"
+                                          th:text="${conge.etat}"></span>
+                                    <span th:if="${conge.etat.name() == 'ANNULE'}" class="badge bg-warning text-dark"
+                                          th:text="${conge.etat}"></span>
+                                    <span th:if="${conge.etat.name() == 'EN_COURS'}" th:text="${conge.etat}"></span>
+                                    <span th:if="${conge.etat.name() == 'ARRETE'}" class="badge bg-secondary"
+                                          th:text="${conge.etat}"></span>
+                                    <span th:if="${conge.etat.name() == 'FINI'}" class="badge bg-dark"
+                                          th:text="${conge.etat}"></span>
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                        <!-- End Table with stripped rows -->
 
                     </div>
                 </div>
+
             </div>
+        </div>
+    </section>
 
-        </section>
-
-    </div>
 </main><!-- End #main -->
+
 
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
         class="bi bi-arrow-up-short"></i></a>
@@ -135,7 +149,7 @@
 <script src="../assets/vendor/php-email-form/validate.js"></script>
 
 <!-- Template Main JS File -->
-
+<script src="assets/js/main.js"></script>
 
 </body>
 

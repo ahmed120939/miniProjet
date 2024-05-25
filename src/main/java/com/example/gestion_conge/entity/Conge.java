@@ -17,7 +17,7 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+
 @Entity
 @Table(name = "conges")
 public class Conge implements Serializable {
@@ -32,6 +32,7 @@ public class Conge implements Serializable {
 
 
     @NotNull
+    @Column(name = "date_debut")
     private LocalDate dateDebut;
 
 
@@ -45,16 +46,9 @@ public class Conge implements Serializable {
     private Etat etat;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = true)
-    @JoinColumn(name = "utilisateur_id", nullable = false)
+    @JoinColumn(name = "employe_id", nullable = false)
     @JsonIgnore
-    private Utilisateur utilisateur;
+    private Employe employe;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Conge conge = (Conge) o;
-        return getId() != null && Objects.equals(getId(), conge.getId());
-    }
 
 }
