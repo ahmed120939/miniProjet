@@ -31,6 +31,8 @@ public class UtilisateurController {
         ModelAndView modelAndView = new ModelAndView();
 
         Utilisateur utilisateur = utilisateurService.findByLoginAndPassword(login, password);
+        utilisateurService.updateEtatEnCoursEmploye();
+        utilisateurService.updateEtatFinEmploye();
         if (utilisateur != null) {
             String typePersonne = utilisateur.getClass().getAnnotation(DiscriminatorValue.class).value();
             session.setAttribute("idEmploye", utilisateur.getId());

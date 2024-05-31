@@ -13,7 +13,12 @@
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
 
-
+    <div th:if="${typePersonne == 'administrateur'}" class="search-bar">
+        <div class="search-form d-flex align-items-center">
+            <input type="text" th:value="${employeSelected}" name="searchEmp" id="searchEmploye"  placeholder="Search" title="Enter search keyword">
+            <button  th:onclick="findByEmploye(searchEmploye.value)"  title="Search"><i class="bi bi-search"></i></button>
+        </div>
+    </div>
 
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">

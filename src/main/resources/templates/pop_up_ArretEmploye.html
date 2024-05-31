@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="pop_up_ArretEmploye" id="pop_up_ArretEmploye" class="pop_up_ArretEmploye">
+
+    <div class="modal fade" id="popUpArretEmploye" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Atttention !!</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-sm-10">
+                        <p>
+                            Voulez vous vraiment arreter ce congé
+                        </p>
+
+                    </div>
+
+
+
+                </div>
+
+                <input type="hidden" id="congeIdInput" value="">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button  th:onclick="'updateEtatArret()'" type="button" class="btn btn-primary">Enregitrer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

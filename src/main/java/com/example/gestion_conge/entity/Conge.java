@@ -47,7 +47,7 @@ public class Conge implements Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name = "employe_id", nullable = false)
-    @JsonIgnore
+
     private Employe employe;
 
 
