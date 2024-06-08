@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -74,20 +75,29 @@ public class CongeController {
         Long idEmploye = (Long) session.getAttribute("idEmploye");
         String nom = (String) session.getAttribute("nom");
         String prenom = (String) session.getAttribute("prenom");
-        Long nombreConge= congeService.findSoldeCongeByEmploye(idEmploye);
-        Long nombreCongeRes= 30-nombreConge;
+        Long nombreConge = congeService.findSoldeCongeByEmploye(idEmploye);
+
+
+        Long  nombreCongeRes= Long.valueOf(30);
+        if (nombreConge != null){
+            nombreCongeRes-=nombreConge;
+        }else{
+            nombreConge= Long.valueOf(0);
+        }
+
+
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("conge", new Conge());
         modelAndView.addObject("dataObtenu", nombreConge);
         modelAndView.addObject("dataRestant", nombreCongeRes);
         modelAndView.addObject("nomPrenom", nom + " " + prenom);
-        modelAndView.setViewName("add_conge");
+        modelAndView.setViewName("conge/add_conge");
         return modelAndView;
     }
 
     @PostMapping("/add")
-    public ModelAndView addConge(HttpSession session, @ModelAttribute Conge conge) {
+    public ModelAndView addConge(HttpSession session, @ModelAttribute Conge conge) throws ParseException {
 
         Long idEmploye = (Long) session.getAttribute("idEmploye");
         congeService.save(conge, idEmploye);
@@ -107,7 +117,7 @@ public class CongeController {
 
     @PostMapping("/updateEtatSollicite/{id}")
     public ResponseEntity<Boolean> updateEtatSollicite(@PathVariable Long id,
-                                       @RequestParam(name = "etat") String etat
+                                                       @RequestParam(name = "etat") String etat
     ) {
         boolean result = congeService.updateEtatSollicite(id, etat);
         return ResponseEntity.ok(result);

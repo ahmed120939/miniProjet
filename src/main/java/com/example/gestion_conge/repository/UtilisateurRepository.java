@@ -1,6 +1,5 @@
 package com.example.gestion_conge.repository;
 
-import com.example.gestion_conge.entity.Conge;
 import com.example.gestion_conge.entity.Employe;
 import com.example.gestion_conge.entity.Utilisateur;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,7 +11,7 @@ import java.util.Optional;
 
 @EnableJpaRepositories
 @Repository
-public interface UtilisateurRepository extends JpaRepository<Utilisateur,Long> {
+public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> {
 
     Optional<Utilisateur> findByLoginAndPassword(String login, String password);
 
@@ -21,8 +20,6 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur,Long> {
 
     @Query(value = "select * from employes where id= ?1", nativeQuery = true)
     Optional<Employe> getEmployeBuId(Long id);
-
-
 
 
 }

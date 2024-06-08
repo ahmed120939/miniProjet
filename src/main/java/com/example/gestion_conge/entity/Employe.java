@@ -27,7 +27,7 @@ public class Employe extends Utilisateur implements Serializable {
 
     @OneToMany(mappedBy = "employe", cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<Conge> conges ;
+    private List<Conge> conges;
 
 
 }

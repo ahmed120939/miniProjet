@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
 
-@Inheritance(strategy = InheritanceType. TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @DiscriminatorColumn(name = "TYPE_PERSONNE")
 @Entity
 @Table(name = "utilisateurs")

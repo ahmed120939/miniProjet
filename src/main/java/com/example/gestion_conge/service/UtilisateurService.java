@@ -1,7 +1,6 @@
 package com.example.gestion_conge.service;
 
 
-import com.example.gestion_conge.entity.Conge;
 import com.example.gestion_conge.entity.Utilisateur;
 import com.example.gestion_conge.repository.CongeRepository;
 import com.example.gestion_conge.repository.UtilisateurRepository;
@@ -17,7 +16,7 @@ public class UtilisateurService {
     CongeRepository congeRepository;
 
     @Autowired
-    public UtilisateurService(UtilisateurRepository utilisateurRepository,CongeRepository congeRepository) {
+    public UtilisateurService(UtilisateurRepository utilisateurRepository, CongeRepository congeRepository) {
         this.utilisateurRepository = utilisateurRepository;
         this.congeRepository = congeRepository;
     }
@@ -26,14 +25,14 @@ public class UtilisateurService {
         Optional<Utilisateur> utilisateur = utilisateurRepository.findByLoginAndPassword(login, password);
         return utilisateur.orElse(null);
     }
+
     public void updateEtatEnCoursEmploye() {
         congeRepository.updateEtatEnCoursEmploye();
     }
+
     public void updateEtatFinEmploye() {
         congeRepository.updateEtatFinEmploye();
     }
-
-
 
 
 }

@@ -2,16 +2,15 @@ package com.example.gestion_conge.entity;
 
 
 import com.example.gestion_conge.enumeration.Etat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
-import org.hibernate.Hibernate;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -27,7 +26,6 @@ public class Conge implements Serializable {
     private Long id;
 
 
-    @NotBlank
     private String description;
 
 

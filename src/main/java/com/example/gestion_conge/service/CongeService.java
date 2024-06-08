@@ -2,13 +2,13 @@ package com.example.gestion_conge.service;
 
 import com.example.gestion_conge.entity.Conge;
 import com.example.gestion_conge.entity.Employe;
-
 import com.example.gestion_conge.enumeration.Etat;
 import com.example.gestion_conge.repository.CongeRepository;
 import com.example.gestion_conge.repository.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -85,15 +85,15 @@ public class CongeService {
 
         return utilisateur.isEmpty();
     }
-    public boolean save(Conge conge,Long idEmploye) {
-        Optional<Employe> employe =  utilisateurRepository.getEmployeBuId(idEmploye);
+
+    public boolean save(Conge conge, Long idEmploye) {
+        Optional<Employe> employe = utilisateurRepository.getEmployeBuId(idEmploye);
         conge.setEtat(Etat.SOLLICITE);
         conge.setEmploye(employe.get());
-        if(conge.getDescription()==null || conge.getDescription().isBlank() ){
-            conge.setDescription("conge");
-        }
+        conge.setDateDebut(conge.getDateDebut());
+
         try {
-           congeRepository.saveAndFlush(conge);
+            congeRepository.save(conge);
             return true;
         } catch (Exception e) {
 
@@ -101,12 +101,13 @@ public class CongeService {
         }
     }
 
-    public boolean updateEtatSollicite(Long id,String etat) {
+    public boolean updateEtatSollicite(Long id, String etat) {
 
 
         try {
-           Conge conge =  congeRepository.findById(id).get();
-            conge.setEtat( Etat.valueOf(etat));
+            Conge conge = congeRepository.findById(id).get();
+            conge.setEtat(Etat.valueOf(etat));
+            conge.setDateRupture(LocalDate.now());
             congeRepository.saveAndFlush(conge);
             return true;
         } catch (Exception e) {
@@ -118,7 +119,7 @@ public class CongeService {
 
     public Long findSoldeCongeByEmploye(Long id) {
 
-return congeRepository.findSoldeCongeByEmploye(id);
+        return congeRepository.findSoldeCongeByEmploye(id);
 
     }
 
